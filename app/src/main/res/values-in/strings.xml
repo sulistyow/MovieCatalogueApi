@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Katalog Film UiUx</string>
+    <string name="judul">Judul</string>
+    <string name="overview">Sinopsis</string>
+    <string name="setting">Pengaturan</string>
+    <string name="tv_show">Acara Tv</string>
+    <string name="movie">Film</string>
+
+</resources>
