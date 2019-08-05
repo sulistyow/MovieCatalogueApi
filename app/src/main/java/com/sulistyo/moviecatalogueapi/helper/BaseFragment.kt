@@ -7,7 +7,6 @@ import io.reactivex.disposables.CompositeDisposable
 
 open class BaseFragment : Fragment() {
     var cd: CompositeDisposable? = null
-    lateinit var data: Sp
 
     override fun onDestroy() {
         super.onDestroy()
@@ -24,7 +23,5 @@ open class BaseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkDisposable()
-        data = Sp(context!!)
-
     }
 }

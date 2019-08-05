@@ -3,9 +3,8 @@ package com.sulistyo.moviecatalogueapi.model
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-
 @Parcelize
-data class TvModel(
+class TvModel(
     val backdropPath: String?,
     val firstAirDate: String?,
     val genreIds: List<Int?>?,

@@ -7,13 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.gson.Gson
 import com.sulistyo.moviecatalogueapi.R
 import com.sulistyo.moviecatalogueapi.adapter.TvAdapter
 import com.sulistyo.moviecatalogueapi.helper.BaseFragment
 import com.sulistyo.moviecatalogueapi.helper.networking.ApiCall
 import com.sulistyo.moviecatalogueapi.invisible
-import com.sulistyo.moviecatalogueapi.model.tv.DataTv
 import com.sulistyo.moviecatalogueapi.view.activity.DetailActivity
 import com.sulistyo.moviecatalogueapi.visible
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -71,16 +69,7 @@ class TvShowFragment : BaseFragment() {
                         kosong.invisible()
                         if (it.body()?.results!!.isNotEmpty()) {
                             mAdapter = TvAdapter(it.body()?.results!!) {
-                                data.tv(
-                                    Gson().toJson(
-                                        DataTv(
-                                            overview = it.overview,
-                                            name = it.name,
-                                            posterPath = it.posterPath
-                                        )
-                                    )
-                                )
-                                data.state("tv")
+
                                 startActivity(Intent(activity, DetailActivity::class.java))
                             }
                             rvTv.apply {

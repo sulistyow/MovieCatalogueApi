@@ -10,11 +10,16 @@ import com.sulistyo.moviecatalogueapi.helper.networking.ApiCall
 import com.sulistyo.moviecatalogueapi.model.movie.DataMovie
 import kotlinx.android.synthetic.main.item_data.view.*
 
-class MovieAdapter(private val mData: List<DataMovie>, val listener: (DataMovie) -> Unit) :
+class MovieAdapter(private var mData: List<DataMovie>, val listener: (DataMovie) -> Unit) :
     RecyclerView.Adapter<MovieAdapter.vHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = vHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.item_data, parent, false)
     )
+
+    fun updateData(mData:List<DataMovie>){
+        this.mData = mData
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount() = mData.size
 

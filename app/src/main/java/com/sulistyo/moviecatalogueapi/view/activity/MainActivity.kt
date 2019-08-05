@@ -3,6 +3,7 @@ package com.sulistyo.moviecatalogueapi.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -15,18 +16,36 @@ import com.sulistyo.moviecatalogueapi.view.fragment.TvShowFragment
 
 class MainActivity : AppCompatActivity() {
 
+    var TAG = "tag"
+    var mFragment: Fragment = Fragment()
+
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.nav_movie -> {
-                selectedFragment(MovieFragment())
+                changeFragment(MovieFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_tv -> {
-                selectedFragment(TvShowFragment())
+                changeFragment(TvShowFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
         }
         false
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("tag", TAG)
+        supportFragmentManager.putFragment(outState, TAG, mFragment)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        /* TAG = savedInstanceState.getString("tag")!!
+         mFragment = supportFragmentManager.getFragment(
+             savedInstanceState,
+             TAG
+         )!!*/
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,15 +53,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-            selectedFragment(MovieFragment())
+        if(null==savedInstanceState){
+            changeFragment(MovieFragment.newInstance())
+        }
     }
 
-    private fun selectedFragment(fragment: Fragment): Boolean {
+    private fun changeFragment(fragment: Fragment){
+        val transact=supportFragmentManager.beginTransaction()
+        transact.replace(R.id.frameMain,fragment)
+        transact.commit()
+    }
+
+   /* private fun selectedFragment(fragment: Fragment, tag: String): Boolean {
+        mFragment = fragment
+        TAG = tag
         supportFragmentManager.beginTransaction()
-            .replace(R.id.frameMain, fragment)
+            .replace(R.id.frameMain, fragment, tag)
             .commit()
         return true
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
