@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragment.MovieFragment">
+    tools:context=".ui.fragment.MoviesFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
@@ -18,9 +18,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMovie"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <include layout="@layout/layout_kosong" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

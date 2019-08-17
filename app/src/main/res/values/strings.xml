@@ -1,11 +1,16 @@
 <resources>
-    <string name="app_name">Movie Catalogue Api</string>
+    <string name="app_name">Movie Catalogue</string>
     <string name="judul">Judul</string>
     <string name="overview">Overview</string>
     <string name="setting">Setting</string>
     <string name="tv_show">TV Show</string>
     <string name="movie">Movie</string>
-    <string name="data_kosong">Data kosong</string>
     <string name="poster">poster</string>
-    <string name="title">Title</string>
+    <string name="favorites">Favorites</string>
+
+    <string-array name="spinner">
+        <item>Movies</item>
+        <item>TV Series</item>
+    </string-array>
+
 </resources>

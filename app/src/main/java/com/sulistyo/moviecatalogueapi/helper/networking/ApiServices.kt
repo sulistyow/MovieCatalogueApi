@@ -1,7 +1,7 @@
 package com.sulistyo.moviecatalogueapi.helper.networking
 
-import com.sulistyo.moviecatalogueapi.model.movie.ResponseMovie
-import com.sulistyo.moviecatalogueapi.model.tv.ResponseTv
+import com.sulistyo.moviecatalogueapi.model.movie.kt.ResponseMovie
+import com.sulistyo.moviecatalogueapi.model.tv.kt.ResponseTv
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET

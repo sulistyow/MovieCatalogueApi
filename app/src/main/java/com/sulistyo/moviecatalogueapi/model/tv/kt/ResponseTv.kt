@@ -1,8 +1,8 @@
-package com.sulistyo.moviecatalogueapi.model.movie
+package com.sulistyo.moviecatalogueapi.model.tv.kt
 
 import com.google.gson.annotations.SerializedName
 
-data class ResponseMovie(
+data class ResponseTv(
 
     @field:SerializedName("page")
 	val page: Int? = null,
@@ -11,7 +11,7 @@ data class ResponseMovie(
 	val totalPages: Int? = null,
 
     @field:SerializedName("results")
-	val results: List<DataMovie>? = null,
+	val results: List<DataTvShow>? = null,
 
     @field:SerializedName("total_results")
 	val totalResults: Int? = null

@@ -11,9 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.DetailActivity"></activity>
+        <activity android:name=".ui.activity.DetailTvActivity"/>
+        <activity android:name=".ui.activity.DetailMoviesActivity" />
+        <activity android:name=".ui.activity.java.DetailMovieActivity"/>
+        <activity android:name=".ui.activity.java.DetailTvShowActivity"/>
+        <activity android:name=".ui.activity.java.MainActivity"/>
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".ui.activity.HomeActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

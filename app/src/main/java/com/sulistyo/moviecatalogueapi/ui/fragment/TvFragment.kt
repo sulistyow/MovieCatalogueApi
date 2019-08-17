@@ -1,37 +1,30 @@
-package com.sulistyo.moviecatalogueapi.view.fragment
+package com.sulistyo.moviecatalogueapi.ui.fragment
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.sulistyo.moviecatalogueapi.R
 import com.sulistyo.moviecatalogueapi.adapter.TvAdapter
 import com.sulistyo.moviecatalogueapi.helper.BaseFragment
 import com.sulistyo.moviecatalogueapi.helper.networking.ApiCall
-import com.sulistyo.moviecatalogueapi.invisible
-import com.sulistyo.moviecatalogueapi.view.activity.DetailActivity
+import com.sulistyo.moviecatalogueapi.model.tv.kt.DataTvShow
 import com.sulistyo.moviecatalogueapi.visible
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_tv_show.*
-import kotlinx.android.synthetic.main.layout_kosong.*
 
-class TvShowFragment : BaseFragment() {
+class TvFragment : BaseFragment() {
     private lateinit var mAdapter: TvAdapter
+    private var DATA = "data"
+    var mData: ArrayList<DataTvShow> = ArrayList()
 
-    companion object {
-        fun newInstance(): MovieFragment {
-            return MovieFragment()
-        }
-    }
-
-    fun showEmptyData() {
-        swipeRefresh.isRefreshing = false
-        rvTv.invisible()
-        kosong.visible()
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelableArrayList(DATA, mData)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onCreateView(
@@ -45,19 +38,28 @@ class TvShowFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         swipeRefresh.isRefreshing = true
-        getList()
+
+        mAdapter = TvAdapter(mData)
+
+        rvTvShow.apply {
+            layoutManager = GridLayoutManager(activity, 2)
+            adapter = mAdapter
+        }
+
+        if (savedInstanceState == null) {
+            getList()
+        } else {
+            mData = savedInstanceState.getParcelableArrayList(DATA)!!
+            mAdapter.updateData(mData)
+            swipeRefresh.isRefreshing = false
+        }
+
         swipeRefresh.setOnRefreshListener {
             getList()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        getList()
-    }
-
-
-    fun getList() {
+    private fun getList() {
         cd?.add(
             ApiCall.instance().getTv(ApiCall.key)
                 .subscribeOn(Schedulers.io())
@@ -65,25 +67,23 @@ class TvShowFragment : BaseFragment() {
                 .subscribe({
                     swipeRefresh.isRefreshing = false
                     if (it.isSuccessful) {
-                        rvTv.visible()
-                        kosong.invisible()
+                        rvTvShow.visible()
                         if (it.body()?.results!!.isNotEmpty()) {
-                            mAdapter = TvAdapter(it.body()?.results!!) {
-
-                                startActivity(Intent(activity, DetailActivity::class.java))
-                            }
-                            rvTv.apply {
-                                layoutManager = GridLayoutManager(activity, 2)
-                                adapter = mAdapter
-                            }
+                            mData.clear()
+                            mData.addAll(it.body()?.results!!)
+                            mAdapter.updateData(mData)
                         }
-                    } else showEmptyData()
+                    } else Toast.makeText(activity, it.message(), Toast.LENGTH_LONG).show()
                 }, {
                     swipeRefresh.isRefreshing = false
-                    showEmptyData()
+                    Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
                 })
         )
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        getList()
+    }
 }

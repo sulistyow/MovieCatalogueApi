@@ -9,13 +9,13 @@ import java.util.concurrent.TimeUnit
 
 object ApiCall {
 
-    val BASE_URL = "https://api.themoviedb.org/3/"
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
 
-    val key = "ac59030a1c6c2e80e782d6eb5458482a"
+    const val key = "ac59030a1c6c2e80e782d6eb5458482a"
 
-    val img = "http://image.tmdb.org/t/p/w185"
+    const val img = "http://image.tmdb.org/t/p/w185"
 
-    fun retrofit(url: String): Retrofit? {
+    private fun retrofit(url: String): Retrofit? {
         val okHttpClient = OkHttpClient().newBuilder()
             .connectTimeout(60 * 5, TimeUnit.SECONDS)
             .readTimeout(60 * 5, TimeUnit.SECONDS)
@@ -34,6 +34,6 @@ object ApiCall {
             .build()
     }
 
-    fun instance() = retrofit(BASE_URL)!!.create(ApiServices::class.java)
+    fun instance() = retrofit(BASE_URL)!!.create(ApiServices::class.java)!!
 
 }
