@@ -1,29 +1,37 @@
 package com.sulistyo.moviecatalogueapi.data
 
-import androidx.room.*
-import com.sulistyo.moviecatalogueapi.data.model.MovieFavorite
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.Query
 import com.sulistyo.moviecatalogueapi.data.model.TvFavorite
 import io.reactivex.Flowable
 
 @Dao
 interface DataDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addTv(tvFavorite: TvFavorite)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addMovie(movieFavorite: MovieFavorite)
-
-    @Query("select * from MOVIE_FAV order by id asc")
+    //movie
+    @Query("select * from movie")
     fun getMovieFav(): Flowable<List<MovieFavorite>>
 
-    @Query("select * from TV_FAV order by id asc")
+    @Insert(onConflict = REPLACE)
+    fun insertMovie(movieFavorite: MovieFavorite)
+
+    @Query("select * from movie where title =:title")
+    fun checkMovie(title: String): List<MovieFavorite>
+
+    @Query("delete from movie where title= :title")
+    fun deleteMovie(title: String)
+
+    //tv
+    @Query("select * from tv")
     fun getTvFav(): Flowable<List<TvFavorite>>
 
-    @Query("delete from TV_FAV where id=:id")
-    fun deleveTv(id: Int)
+    @Insert(onConflict = REPLACE)
+    fun insertTv(movieFavorite: TvFavorite)
 
-    @Query("delete from MOVIE_FAV where id=:id")
-    fun deleteMovie(id: Int)
+    @Query("select * from tv where name =:name")
+    fun checkTv(name: String): List<TvFavorite>
 
-
+    @Query("delete from tv where name= :name")
+    fun deleteTv(name: String)
 }

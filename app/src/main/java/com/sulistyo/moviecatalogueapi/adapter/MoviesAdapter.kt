@@ -35,6 +35,7 @@ class MoviesAdapter(private var mData: List<DataMovies>) :
             itemView.setOnClickListener {
                 val i = Intent(itemView.context, DetailMoviesActivity::class.java)
                 i.putExtra(DetailMoviesActivity.DATA, data)
+                i.putExtra(DetailMoviesActivity.STATE, "movie")
                 itemView.context.startActivity(i)
             }
         }

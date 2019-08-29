@@ -7,6 +7,9 @@
     <string name="movie">Movie</string>
     <string name="poster">poster</string>
     <string name="favorites">Favorites</string>
+    <string name="detail_movie">Detail Movie</string>
+    <string name="detail_tv_show">Detail Tv Show</string>
+    <string name="data_kosong">Empty Data</string>
 
     <string-array name="spinner">
         <item>Movies</item>

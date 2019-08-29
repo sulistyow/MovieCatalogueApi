@@ -4,25 +4,23 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.sulistyo.moviecatalogueapi.data.model.MovieFavorite
 import com.sulistyo.moviecatalogueapi.data.model.TvFavorite
 
 @Database(entities = [MovieFavorite::class, TvFavorite::class], version = 2)
-abstract class Favorite : RoomDatabase() {
+abstract class FavoriteDb : RoomDatabase() {
 
     abstract fun dataDao(): DataDAO
 
     companion object {
-        private var INSTANCE: Favorite? = null
-
-        fun getInstance(context: Context): Favorite? {
+        private var INSTANCE: FavoriteDb? = null
+        fun getInstance(context: Context): FavoriteDb? {
             if (INSTANCE == null) {
-                synchronized(Favorite::class) {
+                synchronized(FavoriteDb::class) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
-                        Favorite::class.java, "favorite.db"
-                    )
-                        .build()
+                        FavoriteDb::class.java,
+                        "favorites.db"
+                    ).build()
                 }
             }
             return INSTANCE

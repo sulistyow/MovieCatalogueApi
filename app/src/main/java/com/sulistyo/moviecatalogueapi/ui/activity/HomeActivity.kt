@@ -30,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_fav -> {
-                changeFragment(FavoriteFragment(), "Favorite")
+                changeFragment(FavoriteFragment(), "FavoriteDb")
             }
         }
         false

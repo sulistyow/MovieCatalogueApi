@@ -36,6 +36,7 @@ class TvAdapter(private var mData: List<DataTvShow>) :
             itemView.setOnClickListener {
                 val i = Intent(itemView.context, DetailTvActivity::class.java)
                 i.putExtra(DetailTvActivity.DATA, data)
+                i.putExtra(DetailTvActivity.STATE, "tv")
                 itemView.context.startActivity(i)
             }
         }

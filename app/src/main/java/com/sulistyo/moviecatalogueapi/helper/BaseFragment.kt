@@ -3,12 +3,12 @@ package com.sulistyo.moviecatalogueapi.helper
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.sulistyo.moviecatalogueapi.data.Favorite
+import com.sulistyo.moviecatalogueapi.data.FavoriteDb
 import io.reactivex.disposables.CompositeDisposable
 
 open class BaseFragment : Fragment() {
     var cd: CompositeDisposable? = null
-    lateinit var favorite: Favorite
+    lateinit var favoriteDb: FavoriteDb
 
     override fun onDestroy() {
         super.onDestroy()
@@ -25,6 +25,6 @@ open class BaseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkDisposable()
-        favorite = Favorite.getInstance(this!!.activity!!)!!
+        favoriteDb = FavoriteDb.getInstance(this!!.activity!!)!!
     }
 }
