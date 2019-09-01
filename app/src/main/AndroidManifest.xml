@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sulistyo.moviecatalogueapi">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,9 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ui.activity.DetailTvActivity" />
         <activity android:name=".ui.activity.DetailMoviesActivity" />
-        <activity android:name=".helper.BaseActivity"/>
+        <activity android:name=".helper.BaseActivity" />
         <activity android:name=".ui.activity.java.DetailMovieActivity" />
         <activity android:name=".ui.activity.java.DetailTvShowActivity" />
         <activity android:name=".ui.activity.java.MainActivity" />
@@ -27,5 +28,7 @@
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

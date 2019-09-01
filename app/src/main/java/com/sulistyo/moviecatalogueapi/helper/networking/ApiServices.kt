@@ -16,4 +16,11 @@ interface ApiServices {
     fun getTv(@Query("api_key") key: String): Observable<Response<ResponseTv>>
 
 
+    @GET("search/movie?api_key=${ApiCall.key}")
+    fun searchMovie(@Query("query") q: String): Observable<Response<ResponseMovie>>
+
+    @GET("search/tv?api_key=${ApiCall.key}")
+    fun searchTv(@Query("query") q: String): Observable<Response<ResponseTv>>
+
+
 }

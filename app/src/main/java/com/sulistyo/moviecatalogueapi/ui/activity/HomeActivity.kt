@@ -12,6 +12,7 @@ import com.sulistyo.moviecatalogueapi.R
 import com.sulistyo.moviecatalogueapi.ui.fragment.FavoriteFragment
 import com.sulistyo.moviecatalogueapi.ui.fragment.MoviesFragment
 import com.sulistyo.moviecatalogueapi.ui.fragment.TvFragment
+import org.jetbrains.anko.startActivity
 
 
 class HomeActivity : AppCompatActivity() {
@@ -19,22 +20,27 @@ class HomeActivity : AppCompatActivity() {
     var TAG = "tag"
     var mFragment: Fragment = MoviesFragment()
 
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.nav_movie -> {
-                changeFragment(MoviesFragment(), "Movie")
-                return@OnNavigationItemSelectedListener true
+    var SearchFor: String = "search"
+
+    private val onNavigationItemSelectedListener =
+        BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_movie -> {
+                    SearchFor = "Movie"
+                    changeFragment(MoviesFragment(), "Movie")
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.nav_tv -> {
+                    SearchFor = "Tv"
+                    changeFragment(TvFragment(), "Tv")
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.nav_fav -> {
+                    changeFragment(FavoriteFragment(), "FavoriteDb")
+                }
             }
-            R.id.nav_tv -> {
-                changeFragment(TvFragment(), "Tv")
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.nav_fav -> {
-                changeFragment(FavoriteFragment(), "FavoriteDb")
-            }
+            false
         }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +48,10 @@ class HomeActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         if (savedInstanceState == null) {
+            SearchFor = "Movie"
             changeFragment(mFragment, TAG)
         } else {
+            SearchFor = KEY_FRAGMENT
             TAG = savedInstanceState.getString(KEY_FRAGMENT)!!
             mFragment = supportFragmentManager.getFragment(savedInstanceState, TAG)!!
             changeFragment(mFragment, TAG)
@@ -75,6 +83,11 @@ class HomeActivity : AppCompatActivity() {
             R.id.setting -> {
                 val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
                 startActivity(mIntent)
+            }
+            R.id.search -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                intent.putExtra(SearchActivity.SEARCH, SearchFor)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
