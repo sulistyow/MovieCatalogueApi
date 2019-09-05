@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.sulistyo.moviecatalogueapi.R
+import com.sulistyo.moviecatalogueapi.reminder.ReminderActivity
 import com.sulistyo.moviecatalogueapi.ui.fragment.FavoriteFragment
 import com.sulistyo.moviecatalogueapi.ui.fragment.MoviesFragment
 import com.sulistyo.moviecatalogueapi.ui.fragment.TvFragment
@@ -88,6 +89,9 @@ class HomeActivity : AppCompatActivity() {
                 val intent = Intent(this, SearchActivity::class.java)
                 intent.putExtra(SearchActivity.SEARCH, SearchFor)
                 startActivity(intent)
+            }
+            R.id.reminder -> {
+                startActivity<ReminderActivity>()
             }
         }
         return super.onOptionsItemSelected(item)

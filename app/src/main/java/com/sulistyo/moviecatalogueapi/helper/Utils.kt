@@ -1,4 +1,4 @@
-package com.sulistyo.moviecatalogueapi
+package com.sulistyo.moviecatalogueapi.helper
 
 import android.view.View
 

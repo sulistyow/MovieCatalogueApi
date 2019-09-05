@@ -12,6 +12,17 @@
     <string name="data_kosong">Empty Data</string>
     <string name="search">Search</string>
 
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="reminder_to_check_what_s_new">Reminder to open application</string>
+    <string name="release_reminder">Release Reminder</string>
+    <string name="new_release_reminder">New Release Reminder</string>
+    <string name="reminder">Reminder</string>
+    <string name="daily">Daily reminder on</string>
+    <string name="daily_of">Daily reminder off</string>
+    <string name="check">Check what\'s new</string>
+    <string name="refresh">Refresh</string>
     <string-array name="spinner">
         <item>Movies</item>
         <item>TV Series</item>

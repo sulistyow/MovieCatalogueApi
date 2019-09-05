@@ -10,6 +10,17 @@
     <string name="detail_movie">Detail Film</string>
     <string name="detail_tv_show">Detail Acara Tv</string>
     <string name="data_kosong">Data Kosong</string>
+    <string name="search">Pencarian</string>
+    <string name="daily_reminder">Pengingat harian</string>
+    <string name="reminder_to_check_what_s_new">Pengingat untuk membuka aplikasi</string>
+    <string name="release_reminder">Pengingat rilis</string>
+    <string name="new_release_reminder">Pengingat rilis baru</string>
+    <string name="reminder">Pengingat</string>
+    <string name="check">Cek apa yang baru</string>
+    <string name="daily">Pengingat harian hidup</string>
+    <string name="daily_of">Pengingat harian mati</string>
+
+
     <string-array name="spinner">
         <item>Film</item>
         <item>Acara Tv</item>

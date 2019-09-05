@@ -1,5 +1,6 @@
 package com.sulistyo.moviecatalogueapi.data
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
@@ -34,4 +35,7 @@ interface DataDAO {
 
     @Query("delete from tv where name= :name")
     fun deleteTv(name: String)
+
+    @Query("select * from movie order by id asc")
+    fun favorite(): Cursor
 }

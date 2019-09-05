@@ -7,10 +7,15 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "movie")
+@Entity(tableName = MovieFavorite.TABLE)
 data class MovieFavorite(
     @ColumnInfo(name = "title") var title: String?,
     @ColumnInfo(name = "overview") var overview: String?,
     @ColumnInfo(name = "posterPath") var posterPath: String?,
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") var id: Long = 0
-) : Parcelable
+) : Parcelable {
+    companion object {
+        const val TABLE = "movie"
+    }
+}
+

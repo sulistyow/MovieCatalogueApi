@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".reminder.ReminderActivity" />
         <activity
             android:name=".ui.activity.SearchActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -27,6 +28,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".helper.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <receiver android:name=".ui.widget.StackWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/stack_widget_info" />
+        </receiver>
+        <provider
+            android:name=".provider.DataProvider"
+            android:authorities="com.sulistyo.moviecatalogueapi.provider"
+            android:exported="true"
+            android:permission="com.sulistyo.moviecatalogueapi.READ_WRITE"/>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

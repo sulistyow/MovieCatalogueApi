@@ -12,7 +12,7 @@ import com.sulistyo.moviecatalogueapi.adapter.TvAdapter
 import com.sulistyo.moviecatalogueapi.helper.BaseFragment
 import com.sulistyo.moviecatalogueapi.helper.networking.ApiCall
 import com.sulistyo.moviecatalogueapi.model.tv.kt.DataTvShow
-import com.sulistyo.moviecatalogueapi.visible
+import com.sulistyo.moviecatalogueapi.helper.visible
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_tv_show.*
