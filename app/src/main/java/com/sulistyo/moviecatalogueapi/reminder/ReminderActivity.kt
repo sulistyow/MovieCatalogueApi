@@ -13,15 +13,14 @@ class ReminderActivity : AppCompatActivity() {
 
 
         btDaily.setOnClickListener {
-            val daily = "07:00"
+            val time = "07:00"
 
-            DailyService().setAlarm(this,daily, btDaily.isChecked)
+            DailyReminder().setAlarm(this,time, btDaily.isChecked)
         }
 
         btRelease.setOnClickListener {
-            val release = "09:00"
-
-
+            val time = "08:00"
+            ReleaseReminder().setRepeatingAlarm(this, time, btDaily.isChecked)
         }
 
     }

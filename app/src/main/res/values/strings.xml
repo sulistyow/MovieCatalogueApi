@@ -18,6 +18,8 @@
     <string name="reminder_to_check_what_s_new">Reminder to open application</string>
     <string name="release_reminder">Release Reminder</string>
     <string name="new_release_reminder">New Release Reminder</string>
+    <string name="release_new">Has been release</string>
+    <string name="no_new_movie">No new movies</string>
     <string name="reminder">Reminder</string>
     <string name="daily">Daily reminder on</string>
     <string name="daily_of">Daily reminder off</string>

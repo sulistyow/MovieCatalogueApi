@@ -7,12 +7,13 @@ import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import com.sulistyo.moviecatalogueapi.data.model.TvFavorite
 import io.reactivex.Flowable
+import io.reactivex.Observable
 
 @Dao
 interface DataDAO {
     //movie
     @Query("select * from movie")
-    fun getMovieFav(): Flowable<List<MovieFavorite>>
+    fun getMovieFav(): Observable<List<MovieFavorite>>
 
     @Insert(onConflict = REPLACE)
     fun insertMovie(movieFavorite: MovieFavorite)
@@ -25,7 +26,7 @@ interface DataDAO {
 
     //tv
     @Query("select * from tv")
-    fun getTvFav(): Flowable<List<TvFavorite>>
+    fun getTvFav(): Observable<List<TvFavorite>>
 
     @Insert(onConflict = REPLACE)
     fun insertTv(movieFavorite: TvFavorite)

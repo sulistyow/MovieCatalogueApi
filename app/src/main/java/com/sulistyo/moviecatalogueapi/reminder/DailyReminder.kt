@@ -17,20 +17,22 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DailyService:BroadcastReceiver() {
+class DailyReminder : BroadcastReceiver() {
 
     private val TIME_FORMAT = "HH:mm"
     private val CHANNEL_ID = "Channel"
     private val CHANNEL_NAME = "Daily"
     private val ID_REMINDER = 100
 
-    override fun onReceive(context: Context?, intent: Intent) {
+    override fun onReceive(context: Context, intent: Intent) {
+        // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
         showNotif(context!!)
     }
 
     private fun showNotif(context: Context) {
 
-        val notifManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notifManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notifications)
@@ -72,14 +74,14 @@ class DailyService:BroadcastReceiver() {
 
     }
 
-    fun setAlarm(context: Context,time: String, isStart:Boolean?){
+    fun setAlarm(context: Context, time: String, isStart: Boolean?) {
         if (isStart!!) {
             val startReminder: Long
 
             if (isDateInvalid(time, TIME_FORMAT)) return
 
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intent = Intent(context, DailyService::class.java)
+            val intent = Intent(context, DailyReminder::class.java)
 
             val timeArray = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
 
@@ -103,17 +105,23 @@ class DailyService:BroadcastReceiver() {
                 pendingIntent
             )
 
-            Toast.makeText(context, context.resources.getString(R.string.daily), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.resources.getString(R.string.daily), Toast.LENGTH_SHORT)
+                .show()
         } else {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val intent = Intent(context, DailyService::class.java)
+            val intent = Intent(context, DailyReminder::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, ID_REMINDER, intent, 0)
 
             alarmManager.cancel(pendingIntent)
-            Toast.makeText(context, context.resources.getString(R.string.daily_of), Toast.LENGTH_SHORT)
+            Toast.makeText(
+                context,
+                context.resources.getString(R.string.daily_of),
+                Toast.LENGTH_SHORT
+            )
                 .show()
 
         }
     }
-
 }
+
+

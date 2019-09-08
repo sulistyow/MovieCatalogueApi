@@ -16,6 +16,8 @@
     <string name="release_reminder">Pengingat rilis</string>
     <string name="new_release_reminder">Pengingat rilis baru</string>
     <string name="reminder">Pengingat</string>
+    <string name="release_new">Telah rilis</string>
+    <string name="no_new_movie">Tidak ada film baru</string>
     <string name="check">Cek apa yang baru</string>
     <string name="daily">Pengingat harian hidup</string>
     <string name="daily_of">Pengingat harian mati</string>

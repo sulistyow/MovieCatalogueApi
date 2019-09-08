@@ -48,7 +48,7 @@ class DataProvider : ContentProvider() {
 
             return cursor
         } else {
-            throw IllegalArgumentException("Unknown$uri")
+            throw IllegalArgumentException("Unknown $uri")
         }
     }
 

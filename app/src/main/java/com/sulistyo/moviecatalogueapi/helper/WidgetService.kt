@@ -23,18 +23,6 @@ class WidgetService : RemoteViewsService() {
         private var cursor: Cursor? = null
         var db: MovieFavorite? = null
 
-        private fun initData() {
-            if (cursor != null) {
-                cursor!!.close()
-            }
-            val token = Binder.clearCallingIdentity()
-            cursor = applicationContext.contentResolver.query(
-                Uri.parse("content://com.sulistyo.moviecatalogueapi.provider/movie")
-                , null, null, null, null
-            )
-            Binder.restoreCallingIdentity(token)
-        }
-
         override fun onCreate() {
 
         }
@@ -44,7 +32,15 @@ class WidgetService : RemoteViewsService() {
         override fun getItemId(position: Int): Long = 0
 
         override fun onDataSetChanged() {
-            initData()
+            if (cursor != null) {
+                cursor!!.close()
+            }
+            val token = Binder.clearCallingIdentity()
+            cursor = applicationContext.contentResolver.query(
+                Uri.parse("content://com.sulistyo.moviecatalogueapi.provider/movie")
+                , null, null, null, null
+            )
+            Binder.restoreCallingIdentity(token)
         }
 
         override fun hasStableIds(): Boolean = false
