@@ -5,10 +5,13 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
+import android.nfc.Tag
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -26,12 +29,13 @@ class DailyReminder : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        showNotif(context!!)
+        showNotif(context)
+        Toast.makeText(context, "Daily Reminder", Toast.LENGTH_LONG).show()
     }
 
     private fun showNotif(context: Context) {
 
-        val notifManager =
+        val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -53,11 +57,11 @@ class DailyReminder : BroadcastReceiver() {
 
             builder.setChannelId(CHANNEL_ID)
 
-            notifManager.createNotificationChannel(channel)
+            notificationManager.createNotificationChannel(channel)
         }
         val notification = builder.build()
 
-        notifManager.notify(ID_REMINDER, notification)
+        notificationManager.notify(ID_REMINDER, notification)
 
     }
 

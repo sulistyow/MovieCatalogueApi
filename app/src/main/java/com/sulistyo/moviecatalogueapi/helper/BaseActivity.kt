@@ -12,7 +12,7 @@ import org.jetbrains.anko.toast
 open class BaseActivity : AppCompatActivity() {
     var cd: CompositeDisposable? = null
     var favoriteDb: FavoriteDb? = null
-
+    lateinit var sharedPref: SharedPreference
 
     private fun checkDisposable() {
         cd = if (cd != null) {
@@ -26,6 +26,7 @@ open class BaseActivity : AppCompatActivity() {
 
         favoriteDb = FavoriteDb.getInstance(this)!!
         checkDisposable()
+        sharedPref = SharedPreference(this)
 
     }
 

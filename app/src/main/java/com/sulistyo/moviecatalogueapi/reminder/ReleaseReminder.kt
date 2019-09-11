@@ -13,30 +13,46 @@ import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.sulistyo.moviecatalogueapi.R
+import com.sulistyo.moviecatalogueapi.helper.networking.ApiCall
 import com.sulistyo.moviecatalogueapi.model.movie.kt.DataMovies
 import com.sulistyo.moviecatalogueapi.model.movie.kt.ResponseMovie
 import com.sulistyo.moviecatalogueapi.ui.activity.DetailMoviesActivity
-import io.reactivex.disposables.CompositeDisposable
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ReleaseReminder : BroadcastReceiver() {
     private val TIME_FORMAT = "HH:mm"
-    private val CHANNEL_ID = "Channel_2"
+    private val CHANNEL_ID = "Channel2"
     private val CHANNEL_NAME = "Release"
     private val GROUP_KEY = "key"
-    private val ID_REMINDER = 102
-    internal var simpleDateFormat: SimpleDateFormat? = null
-    internal var currentDate: String? = null
-    var cd: CompositeDisposable? = null
+    private val ID_REMINDER = 101
+    private var simpleDateFormat: SimpleDateFormat? = null
+    private var currentDate: String? = null
 
     override fun onReceive(context: Context, intent: Intent) {
-        // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        TODO("ReleaseReminder.onReceive() is not implemented")
+        simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+        currentDate = simpleDateFormat!!.format(Date())
+
+        ApiCall.instance().cekRelease(currentDate.toString(), currentDate.toString())
+            .enqueue(object : Callback<ResponseMovie> {
+                override fun onFailure(call: Call<ResponseMovie>, t: Throwable) {
+                }
+
+                override fun onResponse(
+                    call: Call<ResponseMovie>,
+                    response: Response<ResponseMovie>
+                ) {
+                    releaseCheck(response.body()?.results!!, context)
+                }
+            })
+
     }
 
-    private fun checkRelease(mData: List<DataMovies>, context: Context) {
+    private fun releaseCheck(mData: List<DataMovies>, context: Context) {
         val newReleaseMovie = ArrayList<DataMovies>()
 
         for (detailMovie in mData) {
@@ -47,7 +63,7 @@ class ReleaseReminder : BroadcastReceiver() {
         if (newReleaseMovie.size > 0) {
             sendNotification(newReleaseMovie, context)
         } else {
-            showNoReleaseNotification(context)
+            showNotification(context)
         }
     }
 
@@ -87,42 +103,43 @@ class ReleaseReminder : BroadcastReceiver() {
             val intent = Intent(context, ReleaseReminder::class.java)
             val pendingIntent = PendingIntent.getBroadcast(context, ID_REMINDER, intent, 0)
 
-            if (alarmManager != null) {
-                alarmManager.cancel(pendingIntent)
-                Toast.makeText(context, context.resources.getString(R.string.daily_of), Toast.LENGTH_SHORT)
-                    .show()
-
-            }
+            alarmManager.cancel(pendingIntent)
+            Toast.makeText(
+                context,
+                context.resources.getString(R.string.daily_of),
+                Toast.LENGTH_SHORT
+            )
+                .show()
 
         }
     }
 
-    private fun isDateInvalid(time: String, timeFormat: String): Boolean {
-        try {
-            val dateFormat = SimpleDateFormat(timeFormat, Locale.getDefault())
+    private fun isDateInvalid(time: String, format: String): Boolean {
+        return try {
+            val dateFormat = SimpleDateFormat(format, Locale.getDefault())
             dateFormat.isLenient = false
             dateFormat.parse(time)
-            return false
+            false
         } catch (e: ParseException) {
-            return true
+            true
         }
 
     }
 
     private fun sendNotification(mData: List<DataMovies>, context: Context) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        var builder: NotificationCompat.Builder
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         for (i in 0..5) {
 
             val intent = Intent(context, DetailMoviesActivity::class.java)
             intent.putExtra(DetailMoviesActivity.DATA, mData[i])
-            intent.action = java.lang.Long.toString(System.currentTimeMillis())
+            intent.action = System.currentTimeMillis().toString()
 
             val pendingIntent =
                 PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-            builder = NotificationCompat.Builder(context, CHANNEL_ID)
+            val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(mData[i].title)
                 .setContentText(mData[i].title + context.resources.getString(R.string.release_new))
                 .setSmallIcon(R.drawable.ic_notifications)
@@ -131,7 +148,11 @@ class ReleaseReminder : BroadcastReceiver() {
                 .setAutoCancel(true)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+                val channel = NotificationChannel(
+                    CHANNEL_ID,
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_DEFAULT
+                )
 
                 builder.setChannelId(CHANNEL_ID)
 
@@ -145,8 +166,9 @@ class ReleaseReminder : BroadcastReceiver() {
 
     }
 
-    private fun showNoReleaseNotification(context: Context) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private fun showNotification(context: Context) {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val ringtoneManager = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.notification_icon_background)
@@ -161,7 +183,6 @@ class ReleaseReminder : BroadcastReceiver() {
                 CHANNEL_ID,
                 CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT
             )
-
             channel.enableVibration(true)
             channel.vibrationPattern = longArrayOf(1000, 3000, 1000, 1000, 3000)
 
@@ -171,7 +192,6 @@ class ReleaseReminder : BroadcastReceiver() {
         }
 
         val notification = builder.build()
-
         notificationManager.notify(ID_REMINDER, notification)
     }
 

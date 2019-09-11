@@ -1,27 +1,32 @@
 package com.sulistyo.moviecatalogueapi.reminder
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.sulistyo.moviecatalogueapi.R
+import com.sulistyo.moviecatalogueapi.helper.BaseActivity
 import kotlinx.android.synthetic.main.activity_reminder.*
 
-class ReminderActivity : AppCompatActivity() {
+class ReminderActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reminder)
 
+        check()
 
         btDaily.setOnClickListener {
-            val time = "07:00"
-
-            DailyReminder().setAlarm(this,time, btDaily.isChecked)
+            sharedPref.daily = btDaily.isChecked
+            DailyReminder().setAlarm(this, "07:00", btDaily.isChecked)
         }
 
         btRelease.setOnClickListener {
-            val time = "08:00"
-            ReleaseReminder().setRepeatingAlarm(this, time, btDaily.isChecked)
+            sharedPref.release = btRelease.isChecked
+            ReleaseReminder().setRepeatingAlarm(this, "08:00", btDaily.isChecked)
         }
 
+    }
+
+    private fun check() {
+        btDaily.isChecked = sharedPref.daily
+        btRelease.isChecked = sharedPref.release
     }
 }
