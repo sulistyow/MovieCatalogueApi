@@ -171,7 +171,7 @@ class ReleaseReminder : BroadcastReceiver() {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val ringtoneManager = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.notification_icon_background)
+            .setSmallIcon(R.drawable.ic_notifications)
             .setContentTitle(context.getString(R.string.no_new_movie))
             .setContentText(context.getText(R.string.no_new_movie))
             .setColor(ContextCompat.getColor(context, android.R.color.transparent))
